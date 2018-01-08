@@ -21,12 +21,14 @@ void loadEvents() {
       eventName = eventName.substring(0, eventName.length() - 1);
     for(String time : xTimes) {
       Event e = new Event(timeFromString(time), eventName, words[1].trim(), "X", spectator);
-      println(e);
+      if(DEBUG)
+        println(e);
       eventList.add(e);
     }
     for(String time : yTimes) {
       Event e = new Event(timeFromString(time), eventName, words[1].trim(), "Y", spectator);
-      println(e);
+      if(DEBUG)
+        println(e);
       eventList.add(e);
     }
   }

@@ -1,4 +1,5 @@
-boolean DEBUG = true;
+final boolean DEBUG = false;
+final boolean FULLSCREEN = true;
 
 PGraphics noiseGraphics;
 
@@ -8,16 +9,25 @@ float scroll = 0;
 PImage spectatorIcon;
 
 void keyPressed() {
+  if(!DEBUG)
+    return;
   if(keyCode == LEFT)
     currentTimeOffset -= 15;
   if(keyCode == RIGHT)
     currentTimeOffset += 15;
 }
 
+void settings() {
+  if(FULLSCREEN)
+    fullScreen(P3D);
+  else {
+    size(1024, 768);
+  }
+}
+
 void setup() {
-  //size(1024, 768);
-  //surface.setResizable(true);
-  fullScreen(P3D);
+  if(!FULLSCREEN)
+    surface.setResizable(true);
   PFont theFont = loadFont("Roboto-Light-100.vlw");
   textFont(theFont, fontScale);
   noiseGraphics = createGraphics(160, 90);
@@ -26,7 +36,6 @@ void setup() {
 }
 
 void draw() {
-  //fontScale += 1;
   fontScale = height / 6.5;
   
   float millis = millis();
@@ -47,7 +56,7 @@ void draw() {
   noStroke();
   textAlign(CENTER, TOP);
   textSize(.5 * fontScale);
-  text("Sehome SciOly 2017!", width/2, fontScale * .2);
+  text("Sehome SciOly 2018!", width/2, fontScale * .2);
   
   textSize(fontScale);
   fill(#026CA0);
@@ -60,7 +69,8 @@ void draw() {
   boolean shouldScroll = endY - scroll > height;
   if(endY < scheduleY) {
     scroll = endY - scheduleY;
-    println("next!");
+    if(DEBUG)
+      println("next!");
   }
   if(shouldScroll)
     while(endY < height)
